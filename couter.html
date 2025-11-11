@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter App</title>
+
+    <style>
+        :root {
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --accent: #2563eb;
+            --danger: #ef4444;
+            --text: #0f172a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--bg);
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+            width: 320px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        p.subtitle {
+            margin: 0 0 1rem;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .count {
+            font-size: 3.25rem;
+            font-weight: 700;
+            margin: 0.5rem 0 1rem;
+            line-height: 1;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            border: none;
+            background: var(--accent);
+            color: white;
+            padding: 0.65rem 0.9rem;
+            border-radius: 10px;
+            font-size: 1.125rem;
+            cursor: pointer;
+            min-width: 64px;
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.12);
+            transition: transform 0.08s ease, opacity 0.08s ease;
+        }
+
+        button:active {
+            transform: translateY(1px) scale(0.995);
+        }
+
+        button[disabled] {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        button.secondary {
+            background: #e2e8f0;
+            color: var(--text);
+        }
+
+        footer {
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card">
+        <h1>Counter App</h1>
+        <p class="subtitle">Press + or − to adjust the number.</p>
+
+        <div class="count" id="countDisplay">0</div>
+
+        <div class="controls">
+            <button id="decrement" class="secondary" disabled>−</button>
+            <button id="increment">+</button>
+        </div>
+
+        <footer>
+            <p>Press to increase the number. Good luck</p>
+        </footer>
+    </main>
+
+    <script>
+        (function () {
+            const display = document.getElementById('countDisplay');
+            const btnInc = document.getElementById('increment');
+            const btnDec = document.getElementById('decrement');
+            let count = 0;
+
+            function updateDisplay() {
+                display.textContent = count;
+                btnDec.disabled = count <= 0;
+            }
+
+            btnInc.addEventListener('click', () => {
+                count++;
+                updateDisplay();
+            });
+
+            btnDec.addEventListener('click', () => {
+                if (count > 0) {
+                    count--;
+                    updateDisplay();
+                }
+            });
+
+
+            [btnInc, btnDec].forEach(btn => {
+                btn.addEventListener('keydown', (e) => {
+                    if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        btn.click();
+                    }
+                });
+            });
+
+            updateDisplay();
+        })();
+    </script>
+</body>
+
+</html>
